@@ -1,6 +1,5 @@
 package cinema;
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,7 @@ public class RestController {
     public ResponseEntity<?> getStats(@RequestParam (required = false) Object... password) {
         try {
             for (Object obj : password) {
-                if (obj instanceof String && obj != null) {
+                if (obj instanceof String) {
                     if (((String)obj).equalsIgnoreCase("super_secret")) {
                         return new ResponseEntity<>(new StatsForTheManager(purchaseHandler, availableSeats), HttpStatus.OK);
                     }
@@ -74,7 +73,7 @@ public class RestController {
                         HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorInfo("Something else went wrong in the postmapper"),
+            return new ResponseEntity<>(new ErrorInfo("Something else went wrong in the post mapper"),
                     HttpStatus.BAD_REQUEST);
         }
     }
